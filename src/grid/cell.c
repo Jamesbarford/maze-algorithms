@@ -14,19 +14,12 @@ Cell *create_cell(unsigned int row, unsigned int column)
 	return cell;
 }
 
-bool is_linked(Cell *cell, Cell *query)
-{
-	return cell->cell_link_map->north != NULL ||
-		   cell->cell_link_map->south != NULL ||
-		   cell->cell_link_map->east != NULL ||
-		   cell->cell_link_map->west != NULL;
-}
-
 Coords *create_coords()
 {
 	Coords *coords = malloc(sizeof(*coords));
 	if (coords == NULL)
 		fprintf(stderr, "Not enough memory to create coordinates for cell \n");
+
 	return coords;
 }
 
@@ -35,7 +28,16 @@ CellLinks *create_cell_links()
 	CellLinks *cell_link_map = malloc(sizeof(*cell_link_map));
 	if (cell_link_map == NULL)
 		fprintf(stderr, "Not enough memory to create cell links for cell \n");
+
 	return cell_link_map;
+}
+
+bool is_linked(Cell *cell, Cell *query)
+{
+	return cell->cell_link_map->north != NULL ||
+		   cell->cell_link_map->south != NULL ||
+		   cell->cell_link_map->east != NULL ||
+		   cell->cell_link_map->west != NULL;
 }
 
 bool add_cell_link(Cell *link, Direction direction, Cell *cell, bool bidirectional)

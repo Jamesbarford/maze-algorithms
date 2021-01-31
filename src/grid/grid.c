@@ -13,16 +13,14 @@ Grid *create_grid(int unsigned rows, unsigned int columns)
 	return grid;
 }
 
-RandomCoords *get_random_coords(Grid *grid)
+unsigned int random_row(Grid *self)
 {
-	RandomCoords *random_coords = malloc(sizeof(*random_coords));
-	if (grid == NULL)
-		fprintf(stderr, "Failed to allocate memory for random coords \n");
+	return rand() % self->rows;
+}
 
-	random_coords->row = rand() % grid->rows;
-	random_coords->column = rand() % grid->columns;
-
-	return random_coords;
+unsigned int random_column(Grid *self)
+{
+	return rand() % self->columns;
 }
 
 bool in_bounds(Grid *self, unsigned int row, unsigned int column)
