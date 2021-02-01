@@ -1,4 +1,3 @@
-#include <time.h> 
 #include "./grid/grid.h"
 #include "./algos/mazealgorithms.h"
 #include "./debug/debug.h"
@@ -8,30 +7,36 @@
 
 int main(void)
 {
-	srand(time(NULL));
+	Cell *grid[ROWS][COLUMNS];
 
-	Grid *g = create_grid(ROWS, COLUMNS);
-	Cell *grid[g->rows][g->columns];
 	unsigned int row = 0;
 	unsigned int column = 0;
 
-	for (; row < g->rows; ++row)
-		for (column = 0; column < g->columns; ++column)
+	for (; row < ROWS; ++row)
+		for (column = 0; column < COLUMNS; ++column)
 			grid[row][column] = create_cell(row, column);
 
-	for (row = 0; row < g->rows; ++row)
+	for (row = 0; row < ROWS; ++row)
 	{
 		Cell *c;
-		for (column = 0; column < g->columns; ++column)
+		for (column = 0; column < COLUMNS; ++column)
 		{
 			c = grid[row][column];
-			c->coords->north = in_bounds(g, row - 1, column) ? grid[row - 1][column] : NULL;
-			c->coords->south = in_bounds(g, row + 1, column) ? grid[row + 1][column] : NULL;
-			c->coords->east = in_bounds(g, row, column + 1) ? grid[row][column + 1] : NULL;
-			c->coords->west = in_bounds(g, row, column - 1) ? grid[row][column - 1] : NULL;
+
+			unsigned int north_row = row - 1;
+			c->coords->north = in_bounds(ROWS, COLUMNS, north_row, column) ? grid[north_row][column] : NULL;
+
+			unsigned int south_row = row + 1;
+			c->coords->south = in_bounds(ROWS, COLUMNS, south_row, column) ? grid[south_row][column] : NULL;
+
+			unsigned int east_column = column + 1;
+			c->coords->east = in_bounds(ROWS, COLUMNS, row, east_column) ? grid[row][east_column] : NULL;
+
+			unsigned int west_column = column - 1;
+			c->coords->west = in_bounds(ROWS, COLUMNS, row, west_column) ? grid[row][west_column] : NULL;
 		}
 	}
 
-	binary_tree_link(g->rows, g->columns, grid);
-	print_maze(g->rows, g->columns, grid);
+	binary_tree_link(ROWS, COLUMNS, (Cell * (*)[ROWS][COLUMNS]) grid);
+	print_maze(ROWS, COLUMNS, grid);
 }

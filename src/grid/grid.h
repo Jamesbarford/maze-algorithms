@@ -10,7 +10,7 @@ typedef struct Grid
 } Grid;
 
 Grid *create_grid(unsigned int rows, unsigned int columns);
-bool in_bounds(Grid *self, unsigned int row, unsigned int column);
+bool in_bounds(unsigned int MAX_ROW, unsigned int MAX_COL, unsigned int row, unsigned int column);
 unsigned int random_row(Grid *self);
 unsigned int random_column(Grid *self);
 

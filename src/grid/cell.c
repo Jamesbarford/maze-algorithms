@@ -46,22 +46,25 @@ bool add_cell_link(Cell *link, Direction direction, Cell *cell, bool bidirection
 	{
 	case NORTH:
 		link->cell_link_map->north = cell;
-		if (bidirectional)
+		if (bidirectional && cell != NULL)
 			cell->cell_link_map->south = link;
 		return true;
+
 	case SOUTH:
 		link->cell_link_map->south = cell;
-		if (bidirectional)
+		if (bidirectional && cell != NULL)
 			cell->cell_link_map->north = link;
 		return true;
+
 	case EAST:
 		link->cell_link_map->east = cell;
-		if (bidirectional)
+		if (bidirectional && cell != NULL)
 			cell->cell_link_map->west = link;
 		return true;
+
 	case WEST:
 		link->cell_link_map->west = cell;
-		if (bidirectional)
+		if (bidirectional && cell != NULL)
 			cell->cell_link_map->east = link;
 		return true;
 

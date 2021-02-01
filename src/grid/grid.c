@@ -1,6 +1,6 @@
 #include "grid.h"
 
-Grid *create_grid(int unsigned rows, unsigned int columns)
+Grid *create_grid(unsigned int rows, unsigned int columns)
 {
 	Grid *grid = malloc(sizeof(*grid));
 	if (grid == NULL)
@@ -23,7 +23,7 @@ unsigned int random_column(Grid *self)
 	return rand() % self->columns;
 }
 
-bool in_bounds(Grid *self, unsigned int row, unsigned int column)
+bool in_bounds(unsigned int MAX_ROW, unsigned int MAX_COL, unsigned int row, unsigned int column)
 {
-	return row <= self->rows && column <= self->columns;
+	return row < MAX_ROW && column < MAX_COL;
 }

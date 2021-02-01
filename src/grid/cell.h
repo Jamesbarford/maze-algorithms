@@ -40,7 +40,7 @@ typedef struct Cell
 	unsigned int row;
 	unsigned int column;
 	struct Coords *coords;
-	struct Coords *cell_link_map;
+	struct CellLinks *cell_link_map;
 } Cell;
 
 Cell *create_cell(unsigned int row, unsigned int column);
