@@ -3,12 +3,12 @@
 void binary_tree_link(Grid *g)
 {
 	srand(time(NULL));
-
+	Cell *cell;
 	for (unsigned int row = 0; row < g->rows; ++row)
 	{
 		for (unsigned int column = 0; column < g->columns; ++column)
 		{
-			Cell *cell = &g->board[row][column];
+			cell = &g->board[row][column];
 
 			if (cell->coords->north == NULL)
 				add_cell_link(cell, EAST, cell->coords->east, true);
