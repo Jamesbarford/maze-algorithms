@@ -107,15 +107,14 @@ bool free_cell_link(CellLinks *cell_link_map, Direction direction)
 }
 
 // https://stackoverflow.com/a/15397992 c-pointer-to-array-of-pointers-to-structures, is this a good idea 🤔
-Cell **get_neighbors(Cell *cell)
+Cell *get_neighbors(Cell *cell)
 {
-	struct Cell **hash_table[5];
+	struct Cell *hash_table = (struct Cell *)calloc(4, sizeof(struct Cell));
 
-	hash_table[NORTH] = &cell->coords->north;
-	hash_table[SOUTH] = &cell->coords->south;
-	hash_table[EAST] = &cell->coords->east;
-	hash_table[WEST] = &cell->coords->west;
-	hash_table[4] = '\0';
+	hash_table[NORTH] = *cell->coords->north;
+	hash_table[SOUTH] = *cell->coords->south;
+	hash_table[EAST] = *cell->coords->east;
+	hash_table[WEST] = *cell->coords->west;
 
-	return *hash_table;
+	return hash_table;
 }
