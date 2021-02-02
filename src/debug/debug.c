@@ -1,26 +1,42 @@
 #include "debug.h"
 
+#define ROW_COUNT 2000
+
 void print_top(unsigned int columns);
 
 void print_maze(Grid *g)
 {
+	char top[ROW_COUNT];
+	char bottom[ROW_COUNT];
+
 	print_top(g->columns);
 	for (int row = 0; row < g->rows; ++row)
 	{
-		printf("|");
-		char top[g->columns * 3];
+		strcat(top, "|");
+		strcat(bottom, "+");
+
 		for (int column = 0; column < g->columns; ++column)
 		{
 			Cell *cell = &g->board[row][column];
-			printf("   ");
-			printf("%c", cell->cell_link_map->east != NULL ? ' ' : '|');
-			printf("%c", '+');
-			printf("%s", cell->cell_link_map->south != NULL ? "   " : "---");
-			printf("%c", '+');
+
+			strcat(top, "   ");
+			if (cell && cell->cell_link_map->east != NULL)
+				strcat(top, " ");
+			else
+				strcat(top, "|");
+
+			if (cell && cell->cell_link_map->south != NULL)
+				strcat(bottom, "   ");
+			else
+				strcat(bottom, "---");
+
+			strcat(bottom, "+");
 		}
-		printf("|");
-		printf("\n");
-		top[0]='\0';
+
+		printf("%s\n", top);
+		printf("%s\n", bottom);
+		memset(top, '\0', ROW_COUNT);
+		memset(bottom, '\0', ROW_COUNT);
 	}
 }
 
