@@ -1,10 +1,38 @@
 #include "grid.h"
 
-Grid *create_grid(unsigned int rows, unsigned int columns)
+Grid *init_grid(unsigned int rows, unsigned int columns)
 {
-	struct Grid *grid = malloc(sizeof(*grid));
-	struct Cell *cell_values = (Cell *)calloc(rows * columns, sizeof(Cell));
-	struct Cell **board = (Cell **)malloc(rows * sizeof(Cell *));
+	Grid *grid = allocate_grid(rows, columns);
+	Cell *cell;
+
+	for (int row = 0; row < rows; ++row)
+	{
+		for (int column = 0; column < columns; ++column)
+		{
+			cell = &grid->board[row][column];
+
+			int north_row = row - 1;
+			cell->coords->north = in_bounds(grid, north_row, column) ? &grid->board[north_row][column] : NULL;
+
+			int south_row = row + 1;
+			cell->coords->south = in_bounds(grid, south_row, column) ? &grid->board[south_row][column] : NULL;
+
+			int east_column = column + 1;
+			cell->coords->east = in_bounds(grid, row, east_column) ? &grid->board[row][east_column] : NULL;
+
+			int west_column = column - 1;
+			cell->coords->west = in_bounds(grid, row, west_column) ? &grid->board[row][west_column] : NULL;
+		}
+	}
+
+	return grid;
+}
+
+Grid *allocate_grid(unsigned int rows, unsigned int columns)
+{
+	Grid *grid = malloc(sizeof(*grid));
+	Cell *cell_values = (Cell *)calloc(rows * columns, sizeof(Cell));
+	Cell **board = (Cell **)malloc(rows * sizeof(Cell *));
 
 	if (grid == NULL)
 		fprintf(stderr, "Failed to allocate memory to create grid \n");
@@ -19,15 +47,8 @@ Grid *create_grid(unsigned int rows, unsigned int columns)
 		board[i] = cell_values + i * rows;
 
 	for (int i = 0; i < rows; ++i)
-	{
 		for (int j = 0; j < columns; ++j)
-		{
-			board[i][j].cell_link_map = create_cell_links();
-			board[i][j].coords = create_coords();
-			board[i][j].row = i;
-			board[i][j].column = j;
-		}
-	}
+			board[i][j] = *create_cell(i, j);
 
 	grid->board = board;
 	grid->rows = rows;
@@ -37,17 +58,24 @@ Grid *create_grid(unsigned int rows, unsigned int columns)
 	return grid;
 }
 
-unsigned int random_row(Grid *self)
+void free_grid(Grid *grid)
 {
-	return rand() % self->rows;
+	free(*grid->board);
+	free(grid->board);
+	free(grid);
 }
 
-unsigned int random_column(Grid *self)
+unsigned int random_row(Grid *grid)
 {
-	return rand() % self->columns;
+	return rand() % grid->rows;
 }
 
-bool in_bounds(unsigned int MAX_ROW, unsigned int MAX_COL, unsigned int row, unsigned int column)
+unsigned int random_column(Grid *grid)
 {
-	return row < MAX_ROW && column < MAX_COL;
+	return rand() % grid->columns;
+}
+
+bool in_bounds(Grid *grid, unsigned int row, unsigned int column)
+{
+	return row < grid->rows && column < grid->columns;
 }

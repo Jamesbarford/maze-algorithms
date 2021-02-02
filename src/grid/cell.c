@@ -32,6 +32,13 @@ CellLinks *create_cell_links()
 	return cell_link_map;
 }
 
+void free_cell(Cell *cell)
+{
+	free(cell->cell_link_map);
+	free(cell->coords);
+	free(cell);
+}
+
 bool is_linked(Cell *cell, Cell *query)
 {
 	return cell->cell_link_map->north != NULL ||

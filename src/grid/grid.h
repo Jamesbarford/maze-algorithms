@@ -10,8 +10,10 @@ typedef struct Grid
 	struct Cell **board;
 } Grid;
 
-Grid *create_grid(unsigned int rows, unsigned int columns);
-bool in_bounds(unsigned int MAX_ROW, unsigned int MAX_COL, unsigned int row, unsigned int column);
+Grid *init_grid(unsigned int rows, unsigned int columns);
+Grid *allocate_grid(unsigned int rows, unsigned int columns);
+void free_grid(Grid *grid);
+bool in_bounds(Grid *grid, unsigned int row, unsigned int column);
 unsigned int random_row(Grid *self);
 unsigned int random_column(Grid *self);
 
