@@ -1,6 +1,6 @@
 #include "debug.h"
 
-#define ROW_COUNT 2000
+#define ROW_COUNT 3000
 
 void print_top(unsigned int columns);
 

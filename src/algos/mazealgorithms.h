@@ -5,5 +5,6 @@
 #include "../grid/grid.h"
 
 void binary_tree_link(Grid *g);
+void side_winder(Grid *g);
 
 #endif
