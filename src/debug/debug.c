@@ -2,23 +2,25 @@
 
 void print_top(unsigned int columns);
 
-void print_maze(unsigned int rows, unsigned int columns, Cell *grid[rows][columns])
+void print_maze(Grid *g)
 {
-	print_top(columns);
-	for (int row = 0; row < rows; ++row)
+	print_top(g->columns);
+	for (int row = 0; row < g->rows; ++row)
 	{
-
-		for (int column = 0; column < columns; ++column)
+		printf("|");
+		char top[g->columns * 3];
+		for (int column = 0; column < g->columns; ++column)
 		{
-			Cell *cell = grid[row][column];
-
-			printf("%c", cell->cell_link_map->east != NULL ? ' ' : '|');
+			Cell *cell = &g->board[row][column];
 			printf("   ");
+			printf("%c", cell->cell_link_map->east != NULL ? ' ' : '|');
 			printf("%c", '+');
-			printf("%s",cell->cell_link_map->south != NULL ? "   " : "---");
+			printf("%s", cell->cell_link_map->south != NULL ? "   " : "---");
 			printf("%c", '+');
 		}
+		printf("|");
 		printf("\n");
+		top[0]='\0';
 	}
 }
 

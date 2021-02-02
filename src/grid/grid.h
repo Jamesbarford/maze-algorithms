@@ -7,6 +7,7 @@ typedef struct Grid
 	unsigned int rows;
 	unsigned int columns;
 	unsigned int size;
+	struct Cell **board;
 } Grid;
 
 Grid *create_grid(unsigned int rows, unsigned int columns);

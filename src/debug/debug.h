@@ -1,8 +1,8 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#include "../grid/cell.h"
+#include "../grid/grid.h"
 
-void print_maze(unsigned int rows, unsigned int columns, Cell *(*)[]);
+void print_maze(Grid *g);
 
 #endif

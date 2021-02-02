@@ -1,14 +1,14 @@
 #include "mazealgorithms.h"
 
-void binary_tree_link(unsigned int rows, unsigned int columns, Cell *(*grid)[rows][columns])
+void binary_tree_link(Grid *g)
 {
 	srand(time(NULL));
 
-	for (unsigned int row = 0; row < rows; ++row)
+	for (unsigned int row = 0; row < g->rows; ++row)
 	{
-		for (unsigned int column = 0; column < columns; ++column)
+		for (unsigned int column = 0; column < g->columns; ++column)
 		{
-			Cell *cell = (*grid)[row][column];
+			Cell *cell = &g->board[row][column];
 
 			if (cell->coords->north == NULL)
 				add_cell_link(cell, EAST, cell->coords->east, true);
