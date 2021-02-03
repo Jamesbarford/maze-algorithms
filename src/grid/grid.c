@@ -35,7 +35,7 @@ Cell *get_cell(Grid *grid, unsigned int row, unsigned int column)
 
 Grid *allocate_grid(unsigned int rows, unsigned int columns)
 {
-	Grid *grid = calloc(1, sizeof(Grid) + rows * columns * sizeof(Cell));
+	Grid *grid = (Grid *)malloc(sizeof(Grid) + rows * columns * sizeof(Cell));
 
 	if (grid == NULL)
 		fprintf(stderr, "Failed to allocate memory to create grid \n");
