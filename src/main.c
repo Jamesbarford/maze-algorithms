@@ -1,9 +1,12 @@
+#include <time.h>
+
 #include "./grid/grid.h"
 #include "./algos/mazealgorithms.h"
 #include "./debug/debug.h"
 
 int main(int argc, char **argv)
 {
+	srand(time(NULL));
 	if (argc != 2)
 	{
 		fprintf(stderr, "Enter dimensions for maze \n");
@@ -15,7 +18,7 @@ int main(int argc, char **argv)
 
 	Grid *grid = init_grid(dimensions, dimensions);
 
-	binary_tree_link(grid);
+	side_winder_link(grid);
 	print_maze(grid);
 	free_grid(grid);
 

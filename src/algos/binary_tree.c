@@ -2,7 +2,6 @@
 
 void binary_tree_link(Grid *g)
 {
-	srand(time(NULL));
 	for (unsigned int row = 0; row < g->rows; ++row)
 	{
 		for (unsigned int column = 0; column < g->columns; ++column)
