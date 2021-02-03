@@ -6,7 +6,7 @@ void binary_tree_link(Grid *g)
 	{
 		for (unsigned int column = 0; column < g->columns; ++column)
 		{
-			Cell *cell = &g->board[row][column];
+			Cell *cell = get_cell(g, row, column);
 
 			if (cell->coords->north == NULL)
 				add_cell_link(cell, EAST, cell->coords->east, true);
