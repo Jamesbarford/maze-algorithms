@@ -17,7 +17,7 @@ void print_maze(Grid *g)
 
 		for (int column = 0; column < g->columns; ++column)
 		{
-			Cell *cell = &g->board[row][column];
+			Cell *cell = get_cell(g, row, column);
 
 			strcat(top, "   ");
 			if (cell && cell->cell_link_map->east != NULL)

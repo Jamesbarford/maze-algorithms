@@ -9,7 +9,7 @@ void side_winder_link(Grid *g)
 		int ptr = 0;
 		for (unsigned int column = 0; column < g->columns; ++column)
 		{
-			cell = &g->board[row][column];
+			cell = get_cell(g, row, column);
 			run[ptr++] = cell;
 
 			bool at_east = cell->coords->east == NULL;
