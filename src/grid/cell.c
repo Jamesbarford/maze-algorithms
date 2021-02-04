@@ -86,19 +86,15 @@ bool free_cell_link(CellLinks *cell_link_map, Direction direction)
 	{
 	case NORTH:
 		free(cell_link_map->north);
-		cell_link_map->north = NULL;
 		return true;
 	case SOUTH:
 		free(cell_link_map->south);
-		cell_link_map->south = NULL;
 		return true;
 	case EAST:
 		free(cell_link_map->east);
-		cell_link_map->east = NULL;
 		return true;
 	case WEST:
 		free(cell_link_map->west);
-		cell_link_map->west = NULL;
 		return true;
 
 	default:
@@ -106,15 +102,21 @@ bool free_cell_link(CellLinks *cell_link_map, Direction direction)
 	}
 }
 
-// https://stackoverflow.com/a/15397992 c-pointer-to-array-of-pointers-to-structures, is this a good idea 🤔
-Cell *get_neighbors(Cell *cell)
+Cell *get_link(Cell *cell, Direction direction)
 {
-	struct Cell *hash_table = (struct Cell *)calloc(4, sizeof(struct Cell));
-
-	hash_table[NORTH] = *cell->coords->north;
-	hash_table[SOUTH] = *cell->coords->south;
-	hash_table[EAST] = *cell->coords->east;
-	hash_table[WEST] = *cell->coords->west;
-
-	return hash_table;
+	if (cell == NULL)
+		return NULL;
+	switch (direction)
+	{
+	case NORTH:
+		return cell->cell_link_map->north;
+	case SOUTH:
+		return cell->cell_link_map->south;
+	case EAST:
+		return cell->cell_link_map->east;
+	case WEST:
+		return cell->cell_link_map->west;
+	default:
+		return NULL;
+	}
 }

@@ -3,6 +3,7 @@
 #include "./grid/grid.h"
 #include "./algos/mazealgorithms.h"
 #include "./debug/debug.h"
+#include "./grid/distances.h"
 
 int main(int argc, char **argv)
 {
@@ -20,7 +21,9 @@ int main(int argc, char **argv)
 
 	side_winder_link(grid);
 	print_maze(grid);
+	Distances *distances = calculate_distances(grid);
+	print_distances(distances);
 	free_grid(grid);
-
+	free_distances(distances);
 	return 0;
 }
