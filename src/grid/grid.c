@@ -59,8 +59,6 @@ Grid *init_grid(unsigned int rows, unsigned int columns)
 			{
 				cell->coords->west = NULL;
 			}
-
-			printf("row : %d,column:  %d, bmp: %d\n", cell->row, cell->column, cell->coords->bitmap);
 		}
 	}
 

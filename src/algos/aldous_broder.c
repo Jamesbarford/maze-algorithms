@@ -17,7 +17,6 @@ void aldous_broder_link(Grid *g)
 
 		neighbour = get_neighbour(cell, random_direction);
 
-		printf("%s\n", neighbour == NULL ? "true" : "false");
 		if (unlinked_cell(neighbour))
 		{
 			add_cell_link(cell, random_direction, neighbour, true);
