@@ -1,12 +1,12 @@
-OUT_DIR			= output
-SRC				= ./src
-LINK_TARGET		= maze
-SRC_FILES		= $(shell find $(SRC) -name '*.c')
-OBJS			= $(patsubst $(SRC)/%.c, $(OUT_DIR)/%.o, $(SRC_FILES))
-REBUILDABLES	= $(OBJS) $(LINK_TARGET)
-CC_FLAGS		= -std=gnu17 -Wall -g -O0
-CC				= gcc-10
-OUTPUT_FOLDERS	= $(addprefix $(OUT_DIR)/, $(notdir $(patsubst $(SRC), , $(shell find $(SRC) -maxdepth 5 -type d))))
+OUT_DIR	= output
+SRC = ./src
+LINK_TARGET = maze
+SRC_FILES = $(shell find $(SRC) -name '*.c')
+OBJS = $(patsubst $(SRC)/%.c, $(OUT_DIR)/%.o, $(SRC_FILES))
+REBUILDABLES = $(OBJS) $(LINK_TARGET)
+CC_FLAGS = -std=gnu17 -Wall -g -O0
+CC = gcc
+OUTPUT_FOLDERS = $(addprefix $(OUT_DIR)/, $(notdir $(patsubst $(SRC), , $(shell find $(SRC) -maxdepth 5 -type d))))
 
 all: $(LINK_TARGET)
 	@echo "compilation success ✅"
