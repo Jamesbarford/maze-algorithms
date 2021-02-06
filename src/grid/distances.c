@@ -81,7 +81,7 @@ Distances *calculate_distances(Grid *grid)
 			current_run[i] = new_run[i];
 			new_run[i] = NULL;
 		}
-		current_run[i + 1] = '\0';
+		current_run[i + 1] = (Cell *)'\0';
 
 		c = 0;
 		temp_count = 0;
@@ -125,7 +125,6 @@ Distances *find_shortest_path(Distances *distances, Cell *start, Cell *end)
 
 Track *find_longest_path(Distances *distances)
 {
-	Distances *longest_path = create_distances(NULL, distances->rows, distances->columns);
 	Track *max = NULL;
 
 	int max_distance = 0;
