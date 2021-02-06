@@ -20,20 +20,22 @@ Coords *create_coords()
 	if (coords == NULL)
 		fprintf(stderr, "Not enough memory to create coordinates for cell \n");
 
-	coords->north = coords->south = coords->east = coords->west = NULL;
 	coords->bitmap = 0;
+	for (int i = 0; i < 4; ++i)
+		coords->links[i] = NULL;
 
 	return coords;
 }
 
-void set_coord(Coords *coords, Direction direction)
+void set_coord(Cell *cell, Direction direction, Cell *link)
 {
-	coords->bitmap |= 1 << direction;
+	cell->coords->bitmap |= 1 << direction;
+	cell->coords->links[direction] = link;
 }
 
-bool has_coord(Coords *coords, Direction direction)
+bool has_coord(Cell *cell, Direction direction)
 {
-	return coords->bitmap >> direction & 1;
+	return cell->coords->bitmap >> direction & 1;
 }
 
 CellLinks *create_cell_links()
@@ -130,21 +132,10 @@ Cell *get_link(Cell *cell, Direction direction)
 
 Cell *get_neighbour(Cell *cell, Direction direction)
 {
-	if (cell == NULL)
+	if (cell == NULL || !has_coord(cell, direction))
 		return NULL;
-	switch (direction)
-	{
-	case NORTH:
-		return cell->coords->north;
-	case SOUTH:
-		return cell->coords->south;
-	case EAST:
-		return cell->coords->east;
-	case WEST:
-		return cell->coords->west;
-	default:
-		return NULL;
-	}
+
+	return cell->coords->links[direction];
 }
 
 bool unlinked_cell(Cell *cell)

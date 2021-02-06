@@ -12,7 +12,7 @@ void aldous_broder_link(Grid *g)
 	while (unvisited > 0)
 	{
 		short random_direction = rand() % 4;
-		if (!has_coord(cell->coords, random_direction))
+		if (!has_coord(cell, random_direction))
 			continue;
 
 		neighbour = get_neighbour(cell, random_direction);

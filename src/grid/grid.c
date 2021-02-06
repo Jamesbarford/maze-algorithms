@@ -9,56 +9,23 @@ Grid *init_grid(unsigned int rows, unsigned int columns)
 	{
 		for (int column = 0; column < columns; ++column)
 		{
-			short coord_count = 0;
 			cell = get_cell(grid, row, column);
 
 			int north_row = row - 1;
 			if (in_bounds(grid, north_row, column))
-			{
-				cell->coords->north = get_cell(grid, north_row, column);
-				++coord_count;
-				set_coord(cell->coords, NORTH);
-			}
-			else
-			{
-				cell->coords->north = NULL;
-			}
+				set_coord(cell, NORTH, get_cell(grid, north_row, column));
 
 			int south_row = row + 1;
 			if (in_bounds(grid, south_row, column))
-			{
-				cell->coords->south = get_cell(grid, south_row, column);
-				++coord_count;
-				set_coord(cell->coords, SOUTH);
-			}
-			else
-			{
-				cell->coords->south = NULL;
-			}
+				set_coord(cell, SOUTH, get_cell(grid, south_row, column));
 
 			int east_column = column + 1;
 			if (in_bounds(grid, row, east_column))
-			{
-				cell->coords->east = get_cell(grid, row, east_column);
-				++coord_count;
-				set_coord(cell->coords, EAST);
-			}
-			else
-			{
-				cell->coords->east = NULL;
-			}
+				set_coord(cell, EAST, get_cell(grid, row, east_column));
 
 			int west_column = column - 1;
 			if (in_bounds(grid, row, west_column))
-			{
-				cell->coords->west = get_cell(grid, row, west_column);
-				++coord_count;
-				set_coord(cell->coords, WEST);
-			}
-			else
-			{
-				cell->coords->west = NULL;
-			}
+				set_coord(cell, WEST, get_cell(grid, row, west_column));
 		}
 	}
 

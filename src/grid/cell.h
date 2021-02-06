@@ -29,11 +29,8 @@ typedef struct CellLinks
 
 typedef struct Coords
 {
-	struct Cell *north;
-	struct Cell *south;
-	struct Cell *east;
-	struct Cell *west;
 	short bitmap;
+	struct Cell *links[4];
 } Coords;
 
 typedef struct Cell
@@ -48,8 +45,8 @@ Cell *create_cell(unsigned int row, unsigned int column);
 Cell *get_link(Cell *cell, Direction direction);
 Cell *get_neighbour(Cell *cell, Direction direction);
 void free_cell(Cell *cell);
-bool has_coord(Coords *coords, Direction direction);
-void set_coord(Coords *coords, Direction direction);
+bool has_coord(Cell *cell, Direction direction);
+void set_coord(Cell *cell, Direction direction, Cell *link);
 
 Coords *create_coords();
 CellLinks *create_cell_links();

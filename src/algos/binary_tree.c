@@ -8,16 +8,15 @@ void binary_tree_link(Grid *g)
 		{
 			Cell *cell = get_cell(g, row, column);
 
-			if (cell->coords->north == NULL)
-				add_cell_link(cell, EAST, cell->coords->east, true);
-			else if (cell->coords->east == NULL)
-				add_cell_link(cell, NORTH, cell->coords->north, true);
+			if (!has_coord(cell, NORTH))
+				add_cell_link(cell, EAST, get_neighbour(cell, EAST), true);
+			else if (!has_coord(cell, EAST))
+				add_cell_link(cell, NORTH, get_neighbour(cell, NORTH), true);
 			else
 			{
-				int random = rand() % 2;
-				Direction direction = random == NORTH ? NORTH : EAST;
+				Direction direction = rand() % 2 == NORTH ? NORTH : EAST;
 
-				add_cell_link(cell, direction, direction == NORTH ? cell->coords->north : cell->coords->east, true);
+				add_cell_link(cell, direction, get_neighbour(cell, direction), true);
 			}
 		}
 	}
