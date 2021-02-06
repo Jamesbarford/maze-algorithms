@@ -9,7 +9,7 @@ Cell *create_cell(unsigned int row, unsigned int column)
 	cell->row = row;
 	cell->column = column;
 	cell->coords = create_coords();
-	cell->cell_link_map = create_cell_links();
+	cell->cell_link_map = create_coords();
 
 	return cell;
 }
@@ -38,17 +38,6 @@ bool has_coord(Cell *cell, Direction direction)
 	return cell->coords->bitmap >> direction & 1;
 }
 
-CellLinks *create_cell_links()
-{
-	CellLinks *cell_link_map = malloc(sizeof(*cell_link_map));
-	if (cell_link_map == NULL)
-		fprintf(stderr, "Not enough memory to create cell links for cell \n");
-
-	cell_link_map->north = cell_link_map->south = cell_link_map->east = cell_link_map->west = NULL;
-
-	return cell_link_map;
-}
-
 void free_cell(Cell *cell)
 {
 	free(cell->cell_link_map);
@@ -61,27 +50,27 @@ bool add_cell_link(Cell *link, Direction direction, Cell *cell, bool bidirection
 	switch (direction)
 	{
 	case NORTH:
-		link->cell_link_map->north = cell;
+		set_link(link, NORTH, cell);
 		if (bidirectional && cell != NULL)
-			cell->cell_link_map->south = link;
+			set_link(cell, SOUTH, link);
 		return true;
 
 	case SOUTH:
-		link->cell_link_map->south = cell;
+		set_link(link, SOUTH, cell);
 		if (bidirectional && cell != NULL)
-			cell->cell_link_map->north = link;
+			set_link(cell, NORTH, link);
 		return true;
 
 	case EAST:
-		link->cell_link_map->east = cell;
+		set_link(link, EAST, cell);
 		if (bidirectional && cell != NULL)
-			cell->cell_link_map->west = link;
+			set_link(cell, WEST, link);
 		return true;
 
 	case WEST:
-		link->cell_link_map->west = cell;
+		set_link(link, WEST, cell);
 		if (bidirectional && cell != NULL)
-			cell->cell_link_map->east = link;
+			set_link(cell, EAST, link);
 		return true;
 
 	default:
@@ -89,45 +78,18 @@ bool add_cell_link(Cell *link, Direction direction, Cell *cell, bool bidirection
 	}
 }
 
-bool free_cell_link(CellLinks *cell_link_map, Direction direction)
+void set_link(Cell *link, Direction direction, Cell *cell)
 {
-	switch (direction)
-	{
-	case NORTH:
-		free(cell_link_map->north);
-		return true;
-	case SOUTH:
-		free(cell_link_map->south);
-		return true;
-	case EAST:
-		free(cell_link_map->east);
-		return true;
-	case WEST:
-		free(cell_link_map->west);
-		return true;
-
-	default:
-		return false;
-	}
+	link->cell_link_map->bitmap |= 1 << direction;
+	link->cell_link_map->links[direction] = cell;
 }
 
 Cell *get_link(Cell *cell, Direction direction)
 {
-	if (cell == NULL)
+	if (cell == NULL || !has_link(cell, direction))
 		return NULL;
-	switch (direction)
-	{
-	case NORTH:
-		return cell->cell_link_map->north;
-	case SOUTH:
-		return cell->cell_link_map->south;
-	case EAST:
-		return cell->cell_link_map->east;
-	case WEST:
-		return cell->cell_link_map->west;
-	default:
-		return NULL;
-	}
+
+	return cell->cell_link_map->links[direction];
 }
 
 Cell *get_neighbour(Cell *cell, Direction direction)
@@ -140,8 +102,10 @@ Cell *get_neighbour(Cell *cell, Direction direction)
 
 bool unlinked_cell(Cell *cell)
 {
-	return cell->cell_link_map->north == NULL &&
-		   cell->cell_link_map->south == NULL &&
-		   cell->cell_link_map->east == NULL &&
-		   cell->cell_link_map->west == NULL;
+	return cell->cell_link_map->bitmap == 0;
+}
+
+bool has_link(Cell *cell, Direction direction)
+{
+	return cell->cell_link_map->bitmap >> direction & 1;
 }

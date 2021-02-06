@@ -20,12 +20,12 @@ void print_maze(Grid *g)
 			Cell *cell = get_cell(g, row, column);
 
 			strcat(top, "   ");
-			if (cell && cell->cell_link_map->east != NULL)
+			if (cell && has_link(cell, EAST))
 				strcat(top, " ");
 			else
 				strcat(top, "|");
 
-			if (cell && cell->cell_link_map->south != NULL)
+			if (cell && has_link(cell, SOUTH))
 				strcat(bottom, "   ");
 			else
 				strcat(bottom, "---");
@@ -73,12 +73,12 @@ void print_solution(Grid *g, Distances *shortest_path)
 				strcat(top, "   ");
 			}
 
-			if (cell && cell->cell_link_map->east != NULL)
+			if (cell && has_link(cell, EAST))
 				strcat(top, " ");
 			else
 				strcat(top, "|");
 
-			if (cell && cell->cell_link_map->south != NULL)
+			if (cell && has_link(cell, SOUTH))
 				strcat(bottom, "   ");
 			else
 				strcat(bottom, "---");
