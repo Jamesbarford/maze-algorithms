@@ -45,12 +45,13 @@ typedef struct Cell
 
 Cell *create_cell(unsigned int row, unsigned int column);
 Cell *get_link(Cell *cell, Direction direction);
+void free_cell(Cell *cell);
+
 Coords *create_coords();
 CellLinks *create_cell_links();
-void free_cell(Cell *cell);
+
 
 bool add_cell_link(Cell *link, Direction direction, Cell *cell, bool bidirectional);
 bool free_cell_link(CellLinks *cell_link_map, Direction direction);
-bool is_linked(Cell *cell, Cell *query);
 
 #endif
