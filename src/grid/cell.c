@@ -33,11 +33,6 @@ void set_coord(Cell *cell, Direction direction, Cell *link)
 	cell->coords->links[direction] = link;
 }
 
-bool has_coord(Cell *cell, Direction direction)
-{
-	return cell->coords->bitmap >> direction & 1;
-}
-
 void free_cell(Cell *cell)
 {
 	free(cell->cell_link_map);
@@ -84,25 +79,32 @@ void set_link(Cell *link, Direction direction, Cell *cell)
 	link->cell_link_map->links[direction] = cell;
 }
 
-Cell *get_link(Cell *cell, Direction direction)
+Cell *get_cell_from_coords(Coords *coords, Direction direction)
 {
-	if (cell == NULL || !has_link(cell, direction))
+	if (!(coords->bitmap >> direction & 1))
 		return NULL;
 
-	return cell->cell_link_map->links[direction];
+	return coords->links[direction];
+}
+
+Cell *get_link(Cell *cell, Direction direction)
+{
+	return get_cell_from_coords(cell->cell_link_map, direction);
 }
 
 Cell *get_neighbour(Cell *cell, Direction direction)
 {
-	if (cell == NULL || !has_coord(cell, direction))
-		return NULL;
-
-	return cell->coords->links[direction];
+	return get_cell_from_coords(cell->coords, direction);
 }
 
 bool unlinked_cell(Cell *cell)
 {
 	return cell->cell_link_map->bitmap == 0;
+}
+
+bool has_coord(Cell *cell, Direction direction)
+{
+	return cell->coords->bitmap >> direction & 1;
 }
 
 bool has_link(Cell *cell, Direction direction)

@@ -123,6 +123,26 @@ Distances *find_shortest_path(Distances *distances, Cell *start, Cell *end)
 	return shortest_path;
 }
 
+Track *find_longest_path(Distances *distances)
+{
+	Distances *longest_path = create_distances(NULL, distances->rows, distances->columns);
+	Track *max = NULL;
+
+	int max_distance = 0;
+
+	for (unsigned int i = 0; i < distances->rows * distances->columns; ++i)
+	{
+		Track *t = distances->tracks[i];
+		if (t->distance > max_distance)
+		{
+			max_distance = t->distance;
+			max = t;
+		}
+	}
+
+	return max;
+}
+
 void print_distances(Distances *distances)
 {
 	for (int i = 0; i < distances->rows * distances->columns; ++i)

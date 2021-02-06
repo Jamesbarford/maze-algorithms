@@ -22,6 +22,7 @@ typedef struct Distances
 Distances *create_distances(Cell *root, unsigned int rows, unsigned int columns);
 Distances *calculate_distances(Grid *grid);
 Distances *find_shortest_path(Distances *distances, Cell *start, Cell *end);
+Track *find_longest_path(Distances *distances);
 
 void track_distance(Distances *distances, unsigned int row, unsigned int column, unsigned int distance);
 void print_distances(Distances *distances);
