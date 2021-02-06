@@ -64,12 +64,15 @@ void print_solution(Grid *g, Distances *shortest_path)
 			Cell *cell = get_cell(g, row, column);
 			Track *track = get_track(shortest_path, cell->row, cell->column);
 
-			if (track != NULL) {
+			if (track != NULL)
+			{
 				strcat(top, " # ");
-			} else {
+			}
+			else
+			{
 				strcat(top, "   ");
 			}
-			
+
 			if (cell && cell->cell_link_map->east != NULL)
 				strcat(top, " ");
 			else
@@ -88,4 +91,14 @@ void print_solution(Grid *g, Distances *shortest_path)
 		memset(top, '\0', ROW_COUNT);
 		memset(bottom, '\0', ROW_COUNT);
 	}
+}
+
+void print_grid(Grid *g)
+{
+	for (int i = 0; i < g->rows; ++i)
+		for (int j = 0; j < g->columns; ++j)
+		{
+			Cell *cell = get_cell(g, i, j);
+			printf("row: %d, column: %d, coords: 0x%x\n", cell->row, cell->column, cell->coords->bitmap);
+		}
 }

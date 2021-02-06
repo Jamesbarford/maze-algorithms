@@ -5,5 +5,6 @@
 
 void binary_tree_link(Grid *g);
 void side_winder_link(Grid *g);
+void aldous_broder_link(Grid *g);
 
 #endif

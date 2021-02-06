@@ -7,5 +7,6 @@
 
 void print_maze(Grid *g);
 void print_solution(Grid *g, Distances *shortest_path);
+void print_grid(Grid *g);
 
 #endif

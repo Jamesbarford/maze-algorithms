@@ -21,8 +21,19 @@ Coords *create_coords()
 		fprintf(stderr, "Not enough memory to create coordinates for cell \n");
 
 	coords->north = coords->south = coords->east = coords->west = NULL;
+	coords->bitmap = 0;
 
 	return coords;
+}
+
+void set_coord(Coords *coords, Direction direction)
+{
+	coords->bitmap |= 1 << direction;
+}
+
+bool has_coord(Coords *coords, Direction direction)
+{
+	return coords->bitmap >> direction & 1;
 }
 
 CellLinks *create_cell_links()
@@ -115,4 +126,31 @@ Cell *get_link(Cell *cell, Direction direction)
 	default:
 		return NULL;
 	}
+}
+
+Cell *get_neighbour(Cell *cell, Direction direction)
+{
+	if (cell == NULL)
+		return NULL;
+	switch (direction)
+	{
+	case NORTH:
+		return cell->coords->north;
+	case SOUTH:
+		return cell->coords->south;
+	case EAST:
+		return cell->coords->east;
+	case WEST:
+		return cell->coords->west;
+	default:
+		return NULL;
+	}
+}
+
+bool unlinked_cell(Cell *cell)
+{
+	return cell->cell_link_map->north == NULL &&
+		   cell->cell_link_map->south == NULL &&
+		   cell->cell_link_map->east == NULL &&
+		   cell->cell_link_map->west == NULL;
 }
