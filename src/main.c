@@ -1,4 +1,5 @@
 #include <time.h>
+#include <stdint.h>
 
 #include "./grid/grid.h"
 #include "./algos/mazealgorithms.h"
@@ -15,19 +16,17 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	unsigned int dimensions = atoi(argv[1]);
+	uint32_t dimensions = atoi(argv[1]);
 
 	Grid *grid = init_grid(dimensions, dimensions);
 
-	side_winder_link(grid);
+	aldous_broder_link(grid);
 	print_maze(grid);
 	Distances *distances = calculate_distances(grid);
-	print_distances(distances);
+
 	printf("Shortest path:\n");
 	Distances *shortest_path = find_shortest_path(distances, grid->board[0], get_cell(grid, grid->rows - 1, grid->columns - 1));
 	print_distances(shortest_path);
-
-	print_solution(grid, shortest_path);
 
 	free_grid(grid);
 	free_distances(distances);

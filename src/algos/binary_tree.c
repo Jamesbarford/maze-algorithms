@@ -2,9 +2,9 @@
 
 void binary_tree_link(Grid *g)
 {
-	for (unsigned int row = 0; row < g->rows; ++row)
+	for (uint32_t row = 0; row < g->rows; ++row)
 	{
-		for (unsigned int column = 0; column < g->columns; ++column)
+		for (uint32_t column = 0; column < g->columns; ++column)
 		{
 			Cell *cell = get_cell(g, row, column);
 

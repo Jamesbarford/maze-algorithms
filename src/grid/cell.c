@@ -1,6 +1,6 @@
 #include "cell.h"
 
-Cell *create_cell(unsigned int row, unsigned int column)
+Cell *create_cell(uint32_t row, uint32_t column)
 {
 	Cell *cell = malloc(sizeof(*cell));
 	if (cell == NULL)
@@ -21,7 +21,7 @@ Coords *create_coords()
 		fprintf(stderr, "Not enough memory to create coordinates for cell \n");
 
 	coords->bitmap = 0;
-	for (int i = 0; i < 4; ++i)
+	for (uint32_t i = 0; i < 4; ++i)
 		coords->links[i] = NULL;
 
 	return coords;

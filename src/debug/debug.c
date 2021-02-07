@@ -2,7 +2,7 @@
 
 #define ROW_COUNT 3000
 
-void print_top(unsigned int columns);
+void print_top(uint32_t columns);
 
 void print_maze(Grid *g)
 {
@@ -10,12 +10,12 @@ void print_maze(Grid *g)
 	char bottom[ROW_COUNT];
 
 	print_top(g->columns);
-	for (int row = 0; row < g->rows; ++row)
+	for (uint32_t row = 0; row < g->rows; ++row)
 	{
 		strcat(top, "|");
 		strcat(bottom, "+");
 
-		for (int column = 0; column < g->columns; ++column)
+		for (uint32_t column = 0; column < g->columns; ++column)
 		{
 			Cell *cell = get_cell(g, row, column);
 
@@ -40,10 +40,10 @@ void print_maze(Grid *g)
 	}
 }
 
-void print_top(unsigned int columns)
+void print_top(uint32_t columns)
 {
 	printf("+");
-	for (int i = 0; i < columns; ++i)
+	for (uint32_t i = 0; i < columns; ++i)
 		printf("---+");
 	printf("\n");
 }
@@ -54,12 +54,12 @@ void print_solution(Grid *g, Distances *shortest_path)
 	char bottom[ROW_COUNT];
 
 	print_top(g->columns);
-	for (int row = 0; row < g->rows; ++row)
+	for (uint32_t row = 0; row < g->rows; ++row)
 	{
 		strcat(top, "|");
 		strcat(bottom, "+");
 
-		for (int column = 0; column < g->columns; ++column)
+		for (uint32_t column = 0; column < g->columns; ++column)
 		{
 			Cell *cell = get_cell(g, row, column);
 			Track *track = get_track(shortest_path, cell->row, cell->column);
@@ -95,8 +95,8 @@ void print_solution(Grid *g, Distances *shortest_path)
 
 void print_grid(Grid *g)
 {
-	for (int i = 0; i < g->rows; ++i)
-		for (int j = 0; j < g->columns; ++j)
+	for (uint32_t i = 0; i < g->rows; ++i)
+		for (uint32_t j = 0; j < g->columns; ++j)
 		{
 			Cell *cell = get_cell(g, i, j);
 			printf("row: %d, column: %d, coords: 0x%x\n", cell->row, cell->column, cell->coords->bitmap);

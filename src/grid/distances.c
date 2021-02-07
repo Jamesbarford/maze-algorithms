@@ -3,7 +3,7 @@
 
 #include "./distances.h"
 
-Distances *create_distances(Cell *root, unsigned int rows, unsigned int columns)
+Distances *create_distances(Cell *root, uint32_t rows, uint32_t columns)
 {
 	Distances *distances = (Distances *)malloc(sizeof(distances) + rows * columns * sizeof(Cell));
 	if (distances == NULL)
@@ -16,7 +16,7 @@ Distances *create_distances(Cell *root, unsigned int rows, unsigned int columns)
 	return distances;
 }
 
-void track_distance(Distances *distances, unsigned int row, unsigned int column, unsigned int distance)
+void track_distance(Distances *distances, uint32_t row, uint32_t column, uint32_t distance)
 {
 	Track *track = (Track *)malloc(sizeof(Track));
 	if (track == NULL)
@@ -31,7 +31,7 @@ void track_distance(Distances *distances, unsigned int row, unsigned int column,
 	distances->tracks[track->row * distances->rows + track->column] = track;
 }
 
-Track *get_track(Distances *distances, unsigned int row, unsigned int column)
+Track *get_track(Distances *distances, uint32_t row, uint32_t column)
 {
 	if (row > distances->rows || column > distances->columns)
 		return NULL;
@@ -42,9 +42,9 @@ Distances *calculate_distances(Grid *grid)
 {
 	Cell *root = get_cell(grid, 0, 0);
 
-	unsigned int size = grid->rows * grid->columns;
-	unsigned int c = 0;
-	unsigned int temp_count = 0;
+	uint32_t size = grid->rows * grid->columns;
+	uint32_t c = 0;
+	uint32_t temp_count = 0;
 
 	Distances *distances = create_distances(root, grid->rows, grid->columns);
 
@@ -59,7 +59,7 @@ Distances *calculate_distances(Grid *grid)
 	{
 		while ((root = current_run[c++]) != NULL)
 		{
-			for (int direction = 0; direction <= WEST; ++direction)
+			for (uint32_t direction = 0; direction <= WEST; ++direction)
 			{
 				Cell *link = get_link(root, direction);
 				if (link != NULL)
@@ -75,7 +75,7 @@ Distances *calculate_distances(Grid *grid)
 			}
 		}
 
-		int i = 0;
+		uint32_t i = 0;
 		for (; i < size; ++i)
 		{
 			current_run[i] = new_run[i];
@@ -104,7 +104,7 @@ Distances *find_shortest_path(Distances *distances, Cell *start, Cell *end)
 
 	while (current_track != goal)
 	{
-		for (int d = 0; d < 4; ++d)
+		for (uint32_t d = 0; d < 4; ++d)
 		{
 			Cell *link = get_link(current, d);
 			if (link != NULL)
@@ -127,9 +127,9 @@ Track *find_longest_path(Distances *distances)
 {
 	Track *max = NULL;
 
-	int max_distance = 0;
+	uint32_t max_distance = 0;
 
-	for (unsigned int i = 0; i < distances->rows * distances->columns; ++i)
+	for (uint32_t i = 0; i < distances->rows * distances->columns; ++i)
 	{
 		Track *t = distances->tracks[i];
 		if (t->distance > max_distance)
@@ -144,7 +144,7 @@ Track *find_longest_path(Distances *distances)
 
 void print_distances(Distances *distances)
 {
-	for (int i = 0; i < distances->rows * distances->columns; ++i)
+	for (uint32_t i = 0; i < distances->rows * distances->columns; ++i)
 	{
 		Track *track = distances->tracks[i];
 		if (track)
@@ -154,7 +154,7 @@ void print_distances(Distances *distances)
 
 void free_distances(Distances *distances)
 {
-	for (int i = 0; i < distances->rows * distances->columns; ++i)
+	for (uint32_t i = 0; i < distances->rows * distances->columns; ++i)
 	{
 		Track *track = distances->tracks[i];
 		if (track)

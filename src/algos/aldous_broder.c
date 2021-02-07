@@ -2,9 +2,9 @@
 
 void aldous_broder_link(Grid *g)
 {
-	unsigned int start_row = random_row(g);
-	unsigned int start_column = random_column(g);
-	unsigned int unvisited = g->size - 1;
+	uint32_t start_row = random_row(g);
+	uint32_t start_column = random_column(g);
+	uint32_t unvisited = g->size - 1;
 
 	Cell *cell = get_cell(g, start_row, start_column);
 	Cell *neighbour = NULL;

@@ -1,29 +1,29 @@
 #include "grid.h"
 
-Grid *init_grid(unsigned int rows, unsigned int columns)
+Grid *init_grid(uint32_t rows, uint32_t columns)
 {
 	Grid *grid = allocate_grid(rows, columns);
 	Cell *cell;
 
-	for (int row = 0; row < rows; ++row)
+	for (uint32_t row = 0; row < rows; ++row)
 	{
-		for (int column = 0; column < columns; ++column)
+		for (uint32_t column = 0; column < columns; ++column)
 		{
 			cell = get_cell(grid, row, column);
 
-			int north_row = row - 1;
+			uint32_t north_row = row - 1;
 			if (in_bounds(grid, north_row, column))
 				set_coord(cell, NORTH, get_cell(grid, north_row, column));
 
-			int south_row = row + 1;
+			uint32_t south_row = row + 1;
 			if (in_bounds(grid, south_row, column))
 				set_coord(cell, SOUTH, get_cell(grid, south_row, column));
 
-			int east_column = column + 1;
+			uint32_t east_column = column + 1;
 			if (in_bounds(grid, row, east_column))
 				set_coord(cell, EAST, get_cell(grid, row, east_column));
 
-			int west_column = column - 1;
+			uint32_t west_column = column - 1;
 			if (in_bounds(grid, row, west_column))
 				set_coord(cell, WEST, get_cell(grid, row, west_column));
 		}
@@ -32,21 +32,21 @@ Grid *init_grid(unsigned int rows, unsigned int columns)
 	return grid;
 }
 
-Cell *get_cell(Grid *grid, unsigned int row, unsigned int column)
+Cell *get_cell(Grid *grid, uint32_t row, uint32_t column)
 {
 	return grid->board[row * grid->rows + column];
 }
 
-Grid *allocate_grid(unsigned int rows, unsigned int columns)
+Grid *allocate_grid(uint32_t rows, uint32_t columns)
 {
 	Grid *grid = (Grid *)malloc(sizeof(Grid) + rows * columns * sizeof(Cell));
 
 	if (grid == NULL)
 		fprintf(stderr, "Failed to allocate memory to create grid \n");
 
-	unsigned int count = 0;
-	for (int i = 0; i < rows; ++i)
-		for (int j = 0; j < columns; ++j)
+	uint32_t count = 0;
+	for (uint32_t i = 0; i < rows; ++i)
+		for (uint32_t j = 0; j < columns; ++j)
 			grid->board[count++] = create_cell(i, j);
 
 	grid->rows = rows;
@@ -61,17 +61,17 @@ void free_grid(Grid *grid)
 	free(grid);
 }
 
-unsigned int random_row(Grid *grid)
+uint32_t random_row(Grid *grid)
 {
 	return rand() % grid->rows;
 }
 
-unsigned int random_column(Grid *grid)
+uint32_t random_column(Grid *grid)
 {
 	return rand() % grid->columns;
 }
 
-bool in_bounds(Grid *grid, unsigned int row, unsigned int column)
+bool in_bounds(Grid *grid, uint32_t row, uint32_t column)
 {
 	return row < grid->rows && column < grid->columns;
 }

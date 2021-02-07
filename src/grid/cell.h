@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 enum Directions
 {
@@ -13,26 +14,26 @@ enum Directions
 	WEST
 };
 
-typedef unsigned short Direction;
+typedef uint8_t Direction;
 
 struct Coords;
 struct Cell;
 
 typedef struct Coords
 {
-	unsigned short bitmap;
+	uint8_t bitmap;
 	struct Cell *links[4];
 } Coords;
 
 typedef struct Cell
 {
-	unsigned int row;
-	unsigned int column;
+	uint32_t row;
+	uint32_t column;
 	struct Coords *coords;
 	struct Coords *cell_link_map;
 } Cell;
 
-Cell *create_cell(unsigned int row, unsigned int column);
+Cell *create_cell(uint32_t row, uint32_t column);
 Cell *get_link(Cell *cell, Direction direction);
 Cell *get_neighbour(Cell *cell, Direction direction);
 void free_cell(Cell *cell);

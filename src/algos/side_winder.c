@@ -2,12 +2,12 @@
 
 void side_winder_link(Grid *g)
 {
-	for (unsigned int row = 0; row < g->rows; ++row)
+	for (uint32_t row = 0; row < g->rows; ++row)
 	{
 		Cell *run[g->columns];
 		Cell *cell;
-		int ptr = 0;
-		for (unsigned int column = 0; column < g->columns; ++column)
+		uint32_t ptr = 0;
+		for (uint32_t column = 0; column < g->columns; ++column)
 		{
 			cell = get_cell(g, row, column);
 			run[ptr++] = cell;
@@ -18,12 +18,12 @@ void side_winder_link(Grid *g)
 
 			if (close_run)
 			{
-				int idx = rand() % ptr;
+				uint32_t idx = rand() % ptr;
 				Cell *link = run[idx];
 				if (link && has_coord(cell, NORTH))
 					add_cell_link(link, NORTH, get_neighbour(link, NORTH), true);
 				// clear run;
-				for (int i = 0; i < g->columns; ++i)
+				for (uint32_t i = 0; i < g->columns; ++i)
 					run[i] = NULL;
 				ptr = 0;
 			}

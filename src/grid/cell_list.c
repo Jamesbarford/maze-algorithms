@@ -12,13 +12,13 @@ CellNode *create_cell_node()
 	return node;
 }
 
-CellNode *get_node_at(CellNode *node, unsigned int idx)
+CellNode *get_node_at(CellNode *node, uint32_t idx)
 {
 	CellNode *current = node;
 	if (idx == 0)
 		return current;
 
-	unsigned int ptr = 0;
+	uint32_t ptr = 0;
 	while (current->next != NULL && ptr++ != idx)
 		current = current->next;
 
