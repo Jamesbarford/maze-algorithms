@@ -8,6 +8,8 @@ void print_maze(Grid *g)
 {
 	char top[ROW_COUNT];
 	char bottom[ROW_COUNT];
+	memset(top, '\0', ROW_COUNT);
+	memset(bottom, '\0', ROW_COUNT);
 
 	print_top(g->columns);
 	for (uint32_t row = 0; row < g->rows; ++row)
@@ -52,6 +54,8 @@ void print_solution(Grid *g, Distances *shortest_path)
 {
 	char top[ROW_COUNT];
 	char bottom[ROW_COUNT];
+	memset(top, '\0', ROW_COUNT);
+	memset(bottom, '\0', ROW_COUNT);
 
 	print_top(g->columns);
 	for (uint32_t row = 0; row < g->rows; ++row)

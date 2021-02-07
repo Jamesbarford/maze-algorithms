@@ -26,7 +26,8 @@ int main(int argc, char **argv)
 
 	printf("Shortest path:\n");
 	Distances *shortest_path = find_shortest_path(distances, grid->board[0], get_cell(grid, grid->rows - 1, grid->columns - 1));
-	print_distances(shortest_path);
+	// print_distances(shortest_path);
+	print_solution(grid, shortest_path);
 
 	free_grid(grid);
 	free_distances(distances);
