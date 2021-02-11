@@ -35,8 +35,13 @@ void set_coord(Cell *cell, Direction direction, Cell *link)
 
 void free_cell(Cell *cell)
 {
-	free(cell->cell_link_map);
-	free(cell->coords);
+	if (!cell)
+		return;
+
+	if (cell->cell_link_map)
+		free(cell->cell_link_map);
+	if (cell->coords)
+		free(cell->coords);
 	free(cell);
 }
 

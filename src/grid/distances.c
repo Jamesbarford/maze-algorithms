@@ -48,8 +48,8 @@ Distances *calculate_distances(Grid *grid)
 
 	Distances *distances = create_distances(root, grid->rows, grid->columns);
 
-	Cell **current_run = malloc(size * sizeof(Cell *));
-	Cell **new_run = malloc(size * sizeof(Cell *));
+	Cell **current_run = (Cell **)malloc(size * sizeof(Cell *));
+	Cell **new_run = (Cell **)malloc(size * sizeof(Cell *));
 
 	track_distance(distances, 0, 0, 0);
 
@@ -81,14 +81,14 @@ Distances *calculate_distances(Grid *grid)
 			current_run[i] = new_run[i];
 			new_run[i] = NULL;
 		}
-		current_run[i + 1] = (Cell *)'\0';
 
 		c = 0;
 		temp_count = 0;
 	}
-
-	free(new_run);
-	free(current_run);
+	if (new_run)
+		free(new_run);
+	if (current_run)
+		free(current_run);
 
 	return distances;
 }
